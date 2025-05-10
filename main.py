@@ -8,6 +8,8 @@ from sqlalchemy.orm import sessionmaker, Session
 from passlib.hash import bcrypt
 from jose import JWTError, jwt
 from typing import Optional, List
+import os
+
 
 # ==================
 # تنظیمات اولیه
@@ -156,6 +158,11 @@ def delete_profile(db: Session = Depends(get_db), current_user: User = Depends(g
     db.delete(current_user)
     db.commit()
     return {"msg": "deleted"}
+
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port, reload=True)
 
 # ==================
 # اجرای سرور
